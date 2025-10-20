@@ -17,12 +17,12 @@
         <div class="card-body">
           <h5 class="card-title">
             <span th:if="${!request.handled}" class="text-danger fw-bold">*(Новая)*</span>
-            Заявка от <span th:text="${request.fullName}"></span>
+            Заявка от <span th:text="${request.userName}"></span>
           </h5>
           <p class="card-text mb-1">
-            <strong>Курс:</strong> <span th:text="${request.courseName}"></span>
+            <strong>Курс:</strong> <span th:text="${request.course.name}"></span>
           </p>
-          <p class="card-text text-muted" th:text="${request.comment}"></p>
+          <p class="card-text text-muted" th:text="${request.commentary}"></p>
           <p class="card-text">
             <strong>Тел:</strong> <span th:text="${request.phone}"></span>
           </p>

@@ -13,19 +13,18 @@
           <h3 class="card-title text-center mb-4">Новая заявка</h3>
           <form th:action="@{/add-request}" th:object="${request}" method="post">
             <div class="mb-3">
-              <label for="fullName" class="form-label">ФИО:</label>
-              <input type="text" class="form-control" id="fullName" th:field="*{fullName}" required placeholder="ФИО">
+              <label for="userName" class="form-label">ФИО:</label>
+              <input type="text" class="form-control" id="userName" th:field="*{userName}" required placeholder="ФИО">
             </div>
             <div class="mb-3">
               <label for="courseName" class="form-label">Курс:</label>
-              <select class="form-select" id="courseName" th:field="*{courseName}" required>
+              <!-- БЛОК ИСПРАВЛЕН -->
+              <select class="form-select" id="courseName" th:field="*{course}" required>
                 <option value="" disabled selected>Выберите курс</option>
-                <option value="Java Standard Edition">Java Standard Edition</option>
-                <option value="Web Technologies">Web Technologies</option>
-                <option value="Python Programming Language">Python Programming Language</option>
-                <option value="Java Pro">Java Pro</option>
-                <option value="UX/UI Design">UX/UI Design</option>
-                <option value="Django Framework">Django Framework</option>
+                <!-- ✅ Правильно: th:each находится прямо на теге <option> -->
+                <option th:each="course : ${courses}"
+                        th:value="${course.id}"
+                        th:text="${course.name}"></option>
               </select>
             </div>
             <div class="mb-3">
@@ -33,8 +32,8 @@
               <input type="tel" class="form-control" id="phone" th:field="*{phone}" required placeholder="+7(7XX)XXX-XX-XX">
             </div>
             <div class="mb-3">
-              <label for="comment" class="form-label">Комментарии:</label>
-              <textarea class="form-control" id="comment" th:field="*{comment}" rows="4" placeholder="Комментарии"></textarea>
+              <label for="commentary" class="form-label">Комментарии:</label>
+              <textarea class="form-control" id="commentary" th:field="*{commentary}" rows="4" placeholder="Комментарии"></textarea>
             </div>
             <div class="d-grid">
               <button type="submit" class="btn text-white" style="background-color: #004d40;">Добавить заявку</button>
