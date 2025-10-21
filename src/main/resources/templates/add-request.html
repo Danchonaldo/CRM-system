@@ -18,10 +18,8 @@
             </div>
             <div class="mb-3">
               <label for="courseName" class="form-label">Курс:</label>
-              <!-- БЛОК ИСПРАВЛЕН -->
               <select class="form-select" id="courseName" th:field="*{course}" required>
                 <option value="" disabled selected>Выберите курс</option>
-                <!-- ✅ Правильно: th:each находится прямо на теге <option> -->
                 <option th:each="course : ${courses}"
                         th:value="${course.id}"
                         th:text="${course.name}"></option>

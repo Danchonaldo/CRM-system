@@ -1,6 +1,8 @@
 package crmsystem.service;
 
+import crmsystem.entity.Operators;
 import crmsystem.entity.Request;
+import crmsystem.repository.OperatorRepository;
 import crmsystem.repository.RequestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +14,9 @@ public class RequestService {
 
     @Autowired
     private RequestRepository requestRepository;
+
+    @Autowired
+    private OperatorRepository operatorRepository;
 
     public List<Request> getAllRequests() {
         return requestRepository.findAllByOrderByIdDesc();
@@ -44,4 +49,31 @@ public class RequestService {
             requestRepository.save(request);
         }
     }
+
+
+    public void assignOperator(Long requestId, Long operatorId) {
+        Request request = requestRepository.findById(requestId).orElse(null);
+        Operators operator = operatorRepository.findById(operatorId).orElse(null);
+
+        if (request != null && operator != null) {
+            if (!request.getOperators().contains(operator)) {
+                request.getOperators().add(operator);
+                request.setHandled(true);
+                requestRepository.save(request);
+            }
+        }
+    }
+    public void unassignOperator(Long requestId, Long operatorId) {
+        Request request = requestRepository.findById(requestId).orElse(null);
+        Operators operator = operatorRepository.findById(operatorId).orElse(null);
+
+        if (request != null && operator != null) {
+            request.getOperators().remove(operator);
+            if (request.getOperators().isEmpty()) {
+                request.setHandled(false);
+            }
+            requestRepository.save(request);
+        }
+    }
+
 }
