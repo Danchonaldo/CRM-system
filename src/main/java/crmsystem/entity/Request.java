@@ -1,7 +1,5 @@
 package crmsystem.entity;
 
-import crmsystem.entity.Courses;
-import crmsystem.entity.Operators;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -19,8 +17,6 @@ public class Request {
     @Column(name = "user_name", nullable = false)
     private String userName;
 
-//    @Column(name = "course_name", nullable = false)
-//    private String courseName;
 
     @Column(name = "phone", nullable = false)
     private String phone;

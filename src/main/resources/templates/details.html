@@ -15,37 +15,42 @@
                 Обработанная заявка
             </h3>
 
-            =            <div class="card">
-            <div class="card-body">
-                <div class="mb-3">
-                    <label class="form-label fw-bold">ФИО:</label>
-                    <input type="text" class="form-control" th:value="${request.userName}" readonly>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label fw-bold">Курс:</label>
-                    <input type="text" class="form-control" th:value="${request.course.name}" readonly>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label fw-bold">Телефон:</label>
-                    <input type="text" class="form-control" th:value="${request.phone}" readonly>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label fw-bold">Комментарии:</label>
-                    <textarea class="form-control" rows="4" th:text="${request.commentary}" readonly></textarea>
+            <div class="card">
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">ФИО:</label>
+                        <input type="text" class="form-control" th:value="${request.userName}" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Курс:</label>
+                        <input type="text" class="form-control" th:value="${request.course.name}" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Телефон:</label>
+                        <input type="text" class="form-control" th:value="${request.phone}" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Комментарии:</label>
+                        <textarea class="form-control" rows="4" th:text="${request.commentary}" readonly></textarea>
+                    </div>
                 </div>
             </div>
-        </div>
 
             <div class="mt-4 d-flex justify-content-center gap-2">
+                <form th:if="${!request.handled}"
+                      th:action="@{/handle/{id}(id=${request.id})}"
+                      method="post">
+                    <button type="submit" class="btn btn-success">Обработать заявку</button>
+                </form>
 
 
-                <form th:action="@{/delete/{id}(id=${request.id})}" method="post" onsubmit="return confirm('Вы уверены, что хотите удалить эту заявку?');">
+                <form th:action="@{/delete/{id}(id=${request.id})}" method="post"
+                      onsubmit="return confirm('Вы уверены, что хотите удалить эту заявку?');">
                     <button type="submit" class="btn btn-danger">Удалить заявку</button>
                 </form>
             </div>
 
-
-            <div class="mt-4">
+            <div class="mt-4" th:if="${request.handled}">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Назначенные операторы</h5>
@@ -73,12 +78,14 @@
                                         th:if="${!request.operators.contains(operator)}"
                                         th:value="${operator.id}"
                                         th:text="${operator.name + ' ' + operator.surname}">
-                                </option></select>
+                                </option>
+                            </select>
                             <button type="submit" class="btn btn-primary">Назначить</button>
                         </form>
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 </div>

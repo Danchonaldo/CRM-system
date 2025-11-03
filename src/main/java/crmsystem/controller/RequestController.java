@@ -77,10 +77,8 @@ public class RequestController {
         Request request = requestService.getRequestById(id);
         if (request != null) {
             model.addAttribute("request", request);
-
             List<Operators> operators = operatorService.getAllOperators();
             model.addAttribute("operators", operators);
-
             return "details";
         }
         return "redirect:/";
